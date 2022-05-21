@@ -1,4 +1,4 @@
-package main
+package set
 
 import (
 	"fmt"
@@ -96,9 +96,6 @@ func main() {
 
 
 }
-
-
-
 
 
 
