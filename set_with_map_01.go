@@ -1,18 +1,18 @@
 package set
 
-type Set[T comparable] map[T]int
+type Set[T comparable] struct {
+	storage map[T]int
+}
+
+func New[T comparable]() *Set[T] {
+	return &Set[T]{storage: make(map[T]int),}
+}
 
 func (self *Set[T]) Add(value T) {
-	if *self == nil {
-		*self = make(map[T]int)
-	}
-	(*self)[value]++
+	self.storage[value]++
 }
 
 func (self *Set[T]) AddMany(values ...T) {
-	if *self == nil {
-		*self = make(map[T]int)
-	}
 	for _, v := range values {
 		self.Add(v)
 	}
@@ -20,22 +20,19 @@ func (self *Set[T]) AddMany(values ...T) {
 
 func (self *Set[T]) Values() []T {
 	var values []T
-	for key, _ := range *self {
+	for key, _ := range self.storage {
 		values = append(values, key)
 	}
 	return values
 }
 
 func (self *Set[T]) Intersections(other *Set[T]) []T {
-	var set Set[T]
-	if *self == *other {
-		return self.Valus()
+	set := New[T]()
+	for _, v := range self.Values() {
+		set.Add(v)
 	}
-	for key, _ := range *self {
-		set.Add(key)
-	}
-	for key, _ := range *other {
-		set.Add(key)
+	for _, v := range other.Values() {
+		set.Add(v)
 	}
 	return set.Values()
 }
