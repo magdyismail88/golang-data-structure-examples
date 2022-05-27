@@ -18,7 +18,7 @@ func (s *set[T]) Remove(value T) {
 	delete(s.m, value)
 }
 
-func (s *set[T]) Contains(value T) bool {
+func (s *set[T]) Has(value T) bool {
     _, c := s.m[value]
     return c
 }
